@@ -2,27 +2,20 @@ Profile picture by [trevordark on Wallhaven](https://wallhaven.cc/user/trevordar
 
 ```zenuml
 zenuml
-    title Order Service
-    Client #FFEBE6
-    API #0747A6
-    OrderService #E3FCEF
-    group BusinessService {
-      PurchaseService
-      InvoiceService
-    }
+    title API Infrastructure
+    Client
+    API
+    Database
 
     @Starter(Client)
-    // `POST /orders`
-    API.post(payload) {
-      OrderService.create(payload) {
-        order = new Order(payload)
-        if(order != null) {
-          par {
-            PurchaseService.createPO(order)
-            InvoiceService.createInvoice(order)      
-          }      
+    // `GET /search`
+    API.get(query) {
+      Database.fetch(query) {
+        if(result != None) {
+          API.respond {
+            Client.respond
+          }     
         }
       }
     }
-    
 ```
